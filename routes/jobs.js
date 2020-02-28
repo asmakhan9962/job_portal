@@ -144,4 +144,19 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// @route   Get api/jobs/:id
+// desc     Get job by id
+// @access  Private  
+router.get('/:id', auth, async (req, res) => {
+  try {
+    let job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ msg: 'Job Not Found' });
+    }
+    res.json(job);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error3');
+  }
+});
 module.exports = router;

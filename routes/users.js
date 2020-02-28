@@ -12,7 +12,7 @@ const { check, validationResult } = require('express-validator');
 // @access  Public  
 router.post('/', [
   check('name', 'Name is required').not().isEmpty(),
-  check('email', 'Enter a valid email').isEmail(),
+ // check('email', 'Enter a valid email').isEmpty().isEmail(),
   check('password', 'Please make password at least 6 characters long').isLength({ min: 6 })
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -43,9 +43,7 @@ router.post('/', [
         id: user.id
       }
     }
-    jwt.sign(payload, config.get('jwtSecret'), {
-      expiresIn: 360000
-    }, (err, token) => {
+    jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
