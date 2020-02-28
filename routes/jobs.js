@@ -142,7 +142,6 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-
 // @route   Get api/jobs/:id
 // desc     Get job by id
 // @access  Private  
