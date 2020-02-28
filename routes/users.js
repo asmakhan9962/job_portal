@@ -5,14 +5,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
-
+const auth = require('../middleware/auth');
 
 // @route   POST api/users
 // desc     Register a user
 // @access  Public  
 router.post('/', [
   check('name', 'Name is required').not().isEmpty(),
-  check('email', 'Enter a valid email').isEmail(),
+  // check('email', 'Enter a valid email').isEmail(),
   check('password', 'Please make password at least 6 characters long').isLength({ min: 6 })
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -43,9 +43,7 @@ router.post('/', [
         id: user.id
       }
     }
-    jwt.sign(payload, config.get('jwtSecret'), {
-      expiresIn: 360000
-    }, (err, token) => {
+    jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
@@ -55,5 +53,36 @@ router.post('/', [
   }
 
 });
+
+
+// @route   PUT api/users/:id
+// desc     Update User
+// @access  Private  
+router.put('/:id', auth, async (req, res) => {
+  const { checkedCities, checkedCategories } = req.body;
+  // Build user object
+  const userFields = {};
+  if (checkedCities) userFields.ckdCities = checkedCities;
+  if (checkedCategories) userFields.country = checkedCategories;
+
+  try {
+    let user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User Not Found' });
+    }
+
+
+    user = await User.findByIdAndUpdate(req.params.id,
+      { $set: userFields },
+      { new: true }
+    );
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 module.exports = router;

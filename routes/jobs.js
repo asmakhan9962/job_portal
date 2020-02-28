@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const multer = require('multer');
 const Job = require('../models/Job');
 const auth = require('../middleware/auth');
 const fs = require('fs');
-// const upload = multer({
-//   dest: "../admin/public/uploads"
-//   // you might also want to set some limits: https://github.com/expressjs/multer#limits
-// });
+
 // @route   GET api/jobs
 // desc     Get all jobs
 // @access  Private  
@@ -136,11 +132,30 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'Job Not Found' });
     }
 
+    // @ts-ignore
+    fs.unlinkSync("admin/public/uploads/" + job.image);
     await Job.findByIdAndRemove(req.params.id);
     res.json({ msg: 'Job Removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error4');
+  }
+});
+
+
+// @route   Get api/jobs/:id
+// desc     Get job by id
+// @access  Private  
+router.get('/:id', auth, async (req, res) => {
+  try {
+    let job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ msg: 'Job Not Found' });
+    }
+    res.json(job);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error3');
   }
 });
 

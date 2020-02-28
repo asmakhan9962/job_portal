@@ -11,6 +11,11 @@
   position: unset!important;
 }
 
+.jobimg{
+  height: 150px;
+  width: 150px;
+}
+
 /* Multi select css ends */
 
 /*----------------------------------------

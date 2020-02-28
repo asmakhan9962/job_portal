@@ -55,7 +55,7 @@ const JobItem = ({ job }) => {
           </li>
         )}
         {imagepath && (
-          <img src={imagepath} alt="not found" />
+          <img className='jobimg' src={imagepath} alt="not found" />
         )}
 
       </ul>

@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect, Fragment } from 'react'
 import JobContext from '../../context/job/jobContext';
 import CategoryContext from '../../context/category/categoryContext';
 import CityContext from '../../context/city/cityContext';
-// @ts-ignore
+// import Editor from 'react-html-editor';
+// import EditorStyles from 'react-html-editor';
 // @ts-ignore
 import { Multiselect } from 'multiselect-react-dropdown';
 
@@ -120,6 +121,12 @@ const JobForm = () => {
           value={job_description}
           onChange={onChange}
         />
+        {/* <Editor
+          classObject={EditorStyles}
+          name='job_description'
+          value={job_description}
+          onChange={onChange}
+        /> */}
         <input
           type='text'
           placeholder='Email'
