@@ -23,11 +23,12 @@ app.use('/api/jobs', require('./routes/jobs'));
 
 //app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
-///////// for live
+/////// for live
 app.use(express.static('admin/build'));
 
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'admin','build', 'index.html')));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'admin', 'build', 'index.html')));
 
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, '0.0.0.0', () => console.log(`Server started on port ${PORT}`));
+
