@@ -63,7 +63,7 @@ router.put('/:id', auth, async (req, res) => {
   // Build user object
   const userFields = {};
   if (checkedCities) userFields.ckdCities = checkedCities;
-  if (checkedCategories) userFields.country = checkedCategories;
+  if (checkedCategories) userFields.ckdCats = checkedCategories;
 
   try {
     let user = await User.findById(req.params.id);
@@ -84,5 +84,21 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
+// @route   Get api/users/:id
+// desc     Get Specific User
+// @access  Private  
+router.get('/:id', auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User Not Found' });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;
