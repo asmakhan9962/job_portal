@@ -12,7 +12,6 @@ const auth = require('../middleware/auth');
 // @access  Public  
 router.post('/', [
   check('name', 'Name is required').not().isEmpty(),
-  // check('email', 'Enter a valid email').isEmail(),
   check('password', 'Please make password at least 6 characters long').isLength({ min: 6 })
 ], async (req, res) => {
   const errors = validationResult(req);

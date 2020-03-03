@@ -55,7 +55,7 @@ const JobForm = () => {
 
   // @ts-ignore
   const { title, job_description, citys, categorys, category, city,
-    selectedimage, email, phone } = job;
+    email, phone } = job;
 
   const onChange = (e) => {
     setjob({ ...job, [e.target.name]: e.target.value });

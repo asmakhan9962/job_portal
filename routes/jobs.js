@@ -60,7 +60,7 @@ router.post('/', [auth,
     if (base64Data) {
       console.log('req.body', base64Data);
       var imagename = uniqueImageName + '.' + imgType;
-      fs.writeFile("uploads/" + imagename, base64Data, 'base64', function (err) {
+      fs.writeFile("admin/public/uploads/" + imagename, base64Data, 'base64', function (err) {
         console.log(err);
       });
     }
@@ -133,7 +133,7 @@ router.delete('/:id', auth, async (req, res) => {
     }
 
     // @ts-ignore
-    fs.unlinkSync("uploads/" + job.image);
+    fs.unlinkSync("admin/public/uploads/" + job.image);
     await Job.findByIdAndRemove(req.params.id);
     res.json({ msg: 'Job Removed' });
   } catch (err) {

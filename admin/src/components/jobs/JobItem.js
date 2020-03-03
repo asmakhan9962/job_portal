@@ -13,7 +13,6 @@ const JobItem = ({ job }) => {
   };
 
   if (image) {
-    console.log('/uploads/' + image);
     var imagepath = 'uploads/' + image;
   }
   return (
@@ -55,8 +54,8 @@ const JobItem = ({ job }) => {
             })}
           </li>
         )}
-        {image && (
-          <img className='jobimg' src={require('../../../../uploads/' + image)} alt="not found" />
+        {imagepath && (
+          <img className='jobimg' src={imagepath} alt="not found" />
         )}
 
       </ul>
