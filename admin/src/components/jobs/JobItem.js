@@ -6,7 +6,7 @@ const JobItem = ({ job }) => {
   const jobContext = useContext(JobContext);
   const { deleteJob, setCurrent, clearCurrent } = jobContext;
 
-  const { _id, title, job_description, image, category, city, email, phone } = job;
+  const { _id, title, job_description, image, category, city, email, phone, featured } = job;
   const onDelete = () => {
     deleteJob(_id);
     clearCurrent();
@@ -21,11 +21,15 @@ const JobItem = ({ job }) => {
         {title}{' '}
       </h3>
       <ul className='list'>
-        {job_description && (
-          <li>
-            <span><strong>Description: </strong></span>{job_description}
-          </li>
-        )}
+        {job_description && job_description.length > 100 ?
+          (
+            <li>
+              <span><strong>Description: </strong></span>{`${job_description.substring(0, 100)}...`}
+            </li>
+
+          ) :
+          <p>{job_description}</p>
+        }
         {email && (
           <li>
             <i className='fas fa-envelope  mr-1'></i>{email}
@@ -57,6 +61,9 @@ const JobItem = ({ job }) => {
         {imagepath && (
           <img className='jobimg' src={imagepath} alt="not found" />
         )}
+        <li>
+          <span><strong>Featured: </strong>{featured ? 'Yes' : 'No'}</span>
+        </li>
 
       </ul>
       <p>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const Job = require('../models/Job');
+const User = require('../models/User');
 const auth = require('../middleware/auth');
 const fs = require('fs');
 
@@ -30,7 +31,7 @@ router.post('/', [auth,
     return res.status(400).json({ error: errors.array() })
   }
 
-  const { category, city, title, job_description, selectedimage, phone, email } = req.body;
+  const { category, city, title, job_description, selectedimage, phone, email, featured } = req.body;
   function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
     var response = {};
@@ -75,6 +76,7 @@ router.post('/', [auth,
       job_description,
       phone,
       email,
+      featured,
       image: imagename
     });
 
@@ -91,7 +93,8 @@ router.post('/', [auth,
 // desc     Update job
 // @access  Private  
 router.put('/:id', auth, async (req, res) => {
-  const { category, city, title, job_description, image, phone, email } = req.body;
+  console.log('body', req.body);
+  const { category, city, title, job_description, image, phone, email, featured } = req.body;
   // Build job object
   const jobFields = {};
   if (category) jobFields.category = category;
@@ -100,7 +103,10 @@ router.put('/:id', auth, async (req, res) => {
   if (job_description) jobFields.job_description = job_description;
   if (phone) jobFields.phone = phone;
   if (email) jobFields.email = email;
+  jobFields.featured = featured;
   if (image) jobFields.image = image;
+
+  console.log('jobFields', jobFields);
 
   try {
     let job = await Job.findById(req.params.id);
@@ -154,8 +160,59 @@ router.get('/:id', auth, async (req, res) => {
     res.json(job);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error3');
+    res.status(500).send('Server Error4');
   }
 });
+
+// @route   GET api/jobs/ft/jobs
+// desc     Get FT jobs
+// @access  Private  
+router.get('/ft/jobs', auth, async (req, res) => {
+  try {
+    // @ts-ignore
+    const jobs = await Job.find({ featured: true }).sort({ date: -1 });
+    res.json(jobs);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error5');
+  }
+});
+
+// @route   GET api/jobs/user/jobs
+// desc     Get User jobs
+// @access  Private  
+router.get('/user/jobs', auth, async (req, res) => {
+  let cities = []; let cats = [];
+  // @ts-ignore
+  let user = await User.findById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ msg: 'User Not Found' });
+  }
+  // @ts-ignore
+  if (user.ckdCities.length > 0) {
+    // @ts-ignore
+    cities = user.ckdCities;
+  }
+
+  // @ts-ignore
+  if (user.ckdCats.length > 0) {
+    // @ts-ignore
+    cats = user.ckdCats;
+  }
+
+  console.log('cities', cities);
+  console.log('cats', cats);
+
+  try {
+
+    const jobs = await Job.find({ $or: [{ city: { $elemMatch: { key: { $in: cities } } } }, { category: { $elemMatch: { key: { $in: cats } } } }] });
+
+    res.json(jobs);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error1');
+  }
+});
+
 
 module.exports = router;

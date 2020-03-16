@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect, Fragment } from 'react'
 import JobContext from '../../context/job/jobContext';
 import CategoryContext from '../../context/category/categoryContext';
 import CityContext from '../../context/city/cityContext';
-// import Editor from 'react-html-editor';
-// import EditorStyles from 'react-html-editor';
 // @ts-ignore
 import { Multiselect } from 'multiselect-react-dropdown';
 
@@ -35,7 +33,8 @@ const JobForm = () => {
         categorys: categories.map(category => ({ title: category.title, key: category._id })),
         category: [],
         city: [],
-        selectedimage: null
+        selectedimage: null,
+        featured: false
       });
     }
     // eslint-disable-next-line
@@ -50,12 +49,13 @@ const JobForm = () => {
     categorys: categories.map(category => ({ title: category.title, key: category._id })),
     category: [],
     city: [],
-    selectedimage: null
+    selectedimage: null,
+    featured: false
   });
 
   // @ts-ignore
   const { title, job_description, citys, categorys, category, city,
-    email, phone } = job;
+    email, phone, featured } = job;
 
   const onChange = (e) => {
     setjob({ ...job, [e.target.name]: e.target.value });
@@ -86,6 +86,20 @@ const JobForm = () => {
 
   };
 
+  const toggleChange = () => {
+    let ft = !featured;
+    console.log('ft', ft);
+    if (ft === true) {
+      console.log('ft1', ft);
+      setjob({ ...job, featured: true });
+    }
+    else {
+      console.log('ft0', ft);
+      setjob({ ...job, featured: false });
+    }
+
+  }
+
   const imageselect = (e) => {
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -100,6 +114,7 @@ const JobForm = () => {
     };
 
   }
+
   return (
     <Fragment>
       <form onSubmit={onSubmit}
@@ -114,19 +129,11 @@ const JobForm = () => {
           value={title}
           onChange={onChange}
         />
-        <input
-          type='text'
-          placeholder='Job Description'
+        <textarea
           name='job_description'
           value={job_description}
           onChange={onChange}
-        />
-        {/* <Editor
-          classObject={EditorStyles}
-          name='job_description'
-          value={job_description}
-          onChange={onChange}
-        /> */}
+          placeholder='Job Description' />
         <input
           type='text'
           placeholder='Email'
@@ -160,6 +167,13 @@ const JobForm = () => {
           name='city'
         />
         <input type="file" name="image" onChange={imageselect} />
+        <label className="mr-2">Featured</label>
+        <input
+          type='checkbox'
+          name='featured'
+          checked={featured ? true : false}
+          onChange={toggleChange}
+        />
         <div>
           <input
             type='submit'

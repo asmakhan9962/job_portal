@@ -25,6 +25,10 @@ const JobSchema = new mongoose.Schema({
   phone: {
     type: String
   },
+  featured: {
+    type: Boolean,
+    default: false
+  },
   date: {
     type: Date,
     default: Date.now
