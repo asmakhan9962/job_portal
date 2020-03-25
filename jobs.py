@@ -45,12 +45,11 @@ try:
         
         for element in elements:
         
-            jobtitle = element.find("div", {"class": "desc"}).a.div.text
+            jobtitle = element.find("div", {"class": "desc"}).span.text
             city = element.div.a.span.text
             city_id = city.lower()
-            desc = element.find("div", {"class": "desc"}).a['href']
+            desc = element.find("div", {"class": "j-name"}).a['href']
             desc_url = 'https://www.ilmkidunya.com'+desc
-            
             #opening up connection,grabbing description of each job
             uClient = uReq(desc_url)
             desc_html = uClient.read()
@@ -90,13 +89,13 @@ try:
             jobs=db.jobs.insert_one(job)
             print(jobs)
     
-            urlretrieve(img_url, 'admin/public/uploads/orignal/'+filename)
+            urlretrieve(img_url, 'C:/Users/creative/Desktop/uploads/orignal/'+filename)
             
-            with open('admin/public/uploads/orignal/'+filename, 'r+b') as f:
+            with open('C:/Users/creative/Desktop/uploads/orignal/'+filename, 'r+b') as f:
                 with Image.open(f) as image:
                     cover = resizeimage.resize_cover(image, [200, 100])
-                    cover.save('admin/public/uploads/thumbs/'+filename, image.format)
-                
+                    cover.save('C:/Users/creative/Desktop/uploads/thumbs/'+filename, image.format)
+
 except:
   print("Something went wrong")               
            
