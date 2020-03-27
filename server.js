@@ -41,7 +41,7 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'admin', 'build'
 const PORT = process.env.PORT || 3000;
 
 // schedule tasks to be run on the server
-cron.schedule("0 0 * * *", function () {
+cron.schedule("55 10 * * *", function () {
   console.log("running a task every day");
   const python = spawn('python', ['jobs.py']);
 });
