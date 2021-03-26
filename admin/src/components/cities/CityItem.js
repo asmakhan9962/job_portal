@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types';
 import CityContext from '../../context/city/cityContext';
 
-const CityItem = ({ city }) => {
+const CityItem = ({ citye }) => {
   const ctegoryContext = useContext(CityContext);
   const { deleteCity, setCurrent, clearCurrent } = ctegoryContext;
 
-  const { _id, name, country } = city;
+  const { _id, city, country } = citye;
   const onDelete = () => {
     deleteCity(_id);
     clearCurrent();
@@ -15,7 +15,7 @@ const CityItem = ({ city }) => {
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>
-        {name}{' '}
+        {city}{' '}
       </h3>
       <ul className='list'>
         {country && (
@@ -25,7 +25,7 @@ const CityItem = ({ city }) => {
         )}
       </ul>
       <p>
-        <button className='btn btn-dark btn-sm' onClick={() => setCurrent(city)}>Edit</button>
+        <button className='btn btn-dark btn-sm' onClick={() => setCurrent(citye)}>Edit</button>
         <button className='btn btn-danger btn-sm' onClick={onDelete}>Delete</button>
       </p>
     </div>
@@ -33,6 +33,6 @@ const CityItem = ({ city }) => {
 };
 
 CityItem.propTypes = {
-  city: PropTypes.object.isRequired
+  citye: PropTypes.object.isRequired
 };
 export default CityItem;

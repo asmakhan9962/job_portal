@@ -8,11 +8,11 @@ const fs = require('fs');
 
 // @route   GET api/jobs
 // desc     Get all jobs
-// @access  Private  
+// @access  Private
 router.get('/', auth, async (req, res) => {
   try {
     // @ts-ignore
-    const jobs = await Job.find().sort({ date: -1 });
+    const jobs = await Job.find().sort({ date: -1 }).limit(50);
     res.json(jobs);
   } catch (err) {
     console.error(err.message);
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
 
 // @route   POST api/jobs
 // desc     Add new job
-// @access  Private  
+// @access  Private
 router.post('/', [auth,
   check('title', 'Title is required').not().isEmpty()
 ], async (req, res) => {
@@ -91,7 +91,7 @@ router.post('/', [auth,
 
 // @route   PUT api/jobs/:id
 // desc     Update job
-// @access  Private  
+// @access  Private
 router.put('/:id', auth, async (req, res) => {
   console.log('body', req.body);
   const { category, city, title, job_description, image, phone, email, featured } = req.body;
@@ -129,7 +129,7 @@ router.put('/:id', auth, async (req, res) => {
 
 // @route   DELETE api/jobs/:id
 // desc     Delete job
-// @access  Private  
+// @access  Private
 // @ts-ignore
 router.delete('/:id', auth, async (req, res) => {
   try {
@@ -150,7 +150,7 @@ router.delete('/:id', auth, async (req, res) => {
 
 // @route   Get api/jobs/:id
 // desc     Get job by id
-// @access  Private  
+// @access  Private
 router.get('/:id', auth, async (req, res) => {
   try {
     let job = await Job.findById(req.params.id);
@@ -166,21 +166,21 @@ router.get('/:id', auth, async (req, res) => {
 
 // @route   GET api/jobs/ft/jobs
 // desc     Get FT jobs
-// @access  Private  
+// @access  Private
 router.get('/ft/jobs', auth, async (req, res) => {
   try {
     // @ts-ignore
-    const jobs = await Job.find({ featured: true }).sort({ date: -1 });
+    const jobs = await Job.find({ featured: true }).sort({ date: -1 }).limit(5);
     res.json(jobs);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error5');
+    res.status(500).send('Get FT jobs');
   }
 });
 
 // @route   GET api/jobs/user/jobs
 // desc     Get User jobs
-// @access  Private  
+// @access  Private
 router.get('/user/jobs', auth, async (req, res) => {
   let cities = []; let cats = [];
   // @ts-ignore

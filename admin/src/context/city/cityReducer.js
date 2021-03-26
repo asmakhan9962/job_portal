@@ -56,7 +56,7 @@ export default (state, action) => {
         ...state,
         filtered: state.cities.filter(city => {
           const regex = new RegExp(`${action.payload}`, 'gi');
-          return city.name.match(regex) || city.country.match(regex);;
+          return city.city.match(regex) || city.country.match(regex);
         })
       };
     case CLEAR_FILTER:

@@ -5,7 +5,7 @@ import jobReducer from './jobReducer';
 import {
   ADD_JOB, DELETE_JOB, UPDATE_JOB, GET_JOBS,
   JOB_ERROR, CLEAR_JOBS, SET_CURRENT, CLEAR_CURRENT,
-  FILTER_ITEMS, CLEAR_FILTER
+  FILTER_ITEMS, CLEAR_FILTER, GET_FEATRUED
 } from '../types';
 
 
@@ -15,6 +15,7 @@ const JobState = (props) => {
     current: null,
     error: null,
     filtered: null,
+    featured: [],
     loading: true
   };
 
@@ -27,6 +28,23 @@ const JobState = (props) => {
       // @ts-ignore
       dispatch({
         type: GET_JOBS,
+        payload: res.data
+      });
+    } catch (err) {
+      // @ts-ignore
+      dispatch({
+        type: JOB_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+  // Get Featred Jobs
+  const getFeatredJobs = async () => {
+    try {
+      const res = await axios.get('/api/jobs/ft/jobs');
+      // @ts-ignore
+      dispatch({
+        type: GET_FEATRUED,
         payload: res.data
       });
     } catch (err) {
@@ -145,6 +163,7 @@ const JobState = (props) => {
       jobs: state.jobs,
       error: state.error,
       filtered: state.filtered,
+      featured: state.featured,
       current: state.current,
       loading: state.loading,
       getJobs,
@@ -155,7 +174,8 @@ const JobState = (props) => {
       setCurrent,
       clearCurrent,
       filterJobs,
-      clearFilter
+      clearFilter,
+      getFeatredJobs
     }}>
     {props.children}</JobContext.Provider>
 };

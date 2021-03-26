@@ -9,6 +9,7 @@ import Login from './components/auth/Login';
 import Category from './components/pages/Category';
 import City from './components/pages/City';
 import Job from './components/pages/Job';
+import Jobs from './components/jobs/Jobs';
 import Alerts from './components/layouts/Alerts';
 import setAuthToken from './utils/setAuthToken';
 import PrivateRoute from './components/Routing/PrivateRoute';
@@ -43,6 +44,7 @@ const App = () => {
                       <Route exact path='/categories' component={Category} />
                       <Route exact path='/cities' component={City} />
                       <Route exact path='/jobs' component={Job} />
+                      <Route exact path='/jobs/all' component={Jobs} />
                     </Switch>
                   </div>
                 </Fragment>

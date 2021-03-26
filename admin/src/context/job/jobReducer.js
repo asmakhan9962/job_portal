@@ -1,7 +1,7 @@
 import {
   ADD_JOB, DELETE_JOB, UPDATE_JOB, GET_JOBS,
   JOB_ERROR, CLEAR_JOBS, SET_CURRENT, CLEAR_CURRENT,
-  FILTER_ITEMS, CLEAR_FILTER
+  FILTER_ITEMS, CLEAR_FILTER, GET_FEATRUED
 } from '../types';
 
 export default (state, action) => {
@@ -10,6 +10,12 @@ export default (state, action) => {
       return {
         ...state,
         jobs: action.payload,
+        loading: false
+      };
+      case GET_FEATRUED:
+      return {
+        ...state,
+        featured: action.payload,
         loading: false
       };
     case ADD_JOB:

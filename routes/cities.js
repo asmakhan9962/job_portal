@@ -49,12 +49,12 @@ router.post('/', [auth,
 
 // @route   PUT api/cities/:id
 // desc     Update city
-// @access  Private  
+// @access  Private
 router.put('/:id', auth, async (req, res) => {
-  const { name, country } = req.body;
+  const { city, country } = req.body;
   // Build city object
   const cityFields = {};
-  if (name) cityFields.name = name;
+  if (city) cityFields.city = city;
   if (country) cityFields.country = country;
 
   try {
@@ -79,7 +79,7 @@ router.put('/:id', auth, async (req, res) => {
 
 // @route   DELETE api/cities/:id
 // desc     Delete city
-// @access  Private  
+// @access  Private
 // @ts-ignore
 router.delete('/:id', auth, async (req, res) => {
   try {

@@ -31,5 +31,6 @@ export const ADD_JOB = 'ADD_JOB';
 export const DELETE_JOB = 'DELETE_JOB';
 export const UPDATE_JOB = 'UPDATE_JOB';
 export const GET_JOBS = 'GET_JOBS';
+export const GET_FEATRUED = 'GET_FEATRUED';
 export const CLEAR_JOBS = 'CLEAR_JOBS';
 export const JOB_ERROR = 'JOB_ERROR';

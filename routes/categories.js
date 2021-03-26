@@ -49,7 +49,7 @@ router.post('/', [auth,
 
 // @route   PUT api/categories/:id
 // desc     Update category
-// @access  Private  
+// @access  Private
 router.put('/:id', auth, async (req, res) => {
   const { title, description } = req.body;
   // Build category object
@@ -79,7 +79,7 @@ router.put('/:id', auth, async (req, res) => {
 
 // @route   DELETE api/categories/:id
 // desc     Delete category
-// @access  Private  
+// @access  Private
 // @ts-ignore
 router.delete('/:id', auth, async (req, res) => {
   try {

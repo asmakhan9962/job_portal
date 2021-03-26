@@ -11,28 +11,28 @@ const CityForm = () => {
       setcity(current);
     } else {
       setcity({
-        name: '',
+        city: '',
         country: ''
       });
     }
   }, [cityContext, current]);
 
-  const [city, setcity] = useState({
-    name: '',
+  const [citye, setcity] = useState({
+    city: '',
     country: ''
   });
 
-  const { name, country } = city;
+  const { city, country } = citye;
 
   const onChange = e =>
-    setcity({ ...city, [e.target.name]: e.target.value });
+    setcity({ ...citye, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
     if (current === null) {
-      addCity(city);
+      addCity(citye);
     } else {
-      updateCity(city);
+      updateCity(citye);
     }
     clearAll();
   };
@@ -49,8 +49,8 @@ const CityForm = () => {
       <input
         type='text'
         placeholder='Name'
-        name='name'
-        value={name}
+        name='city'
+        value={city}
         onChange={onChange}
       />
       <input

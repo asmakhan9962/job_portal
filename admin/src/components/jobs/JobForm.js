@@ -29,7 +29,7 @@ const JobForm = () => {
         job_description: '',
         phone: '',
         email: '',
-        citys: cities.map(city => ({ name: city.name, key: city._id })),
+        citys: cities.map(city => ({ name: city.city, key: city._id })),
         categorys: categories.map(category => ({ title: category.title, key: category._id })),
         category: [],
         city: [],

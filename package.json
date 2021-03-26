@@ -20,7 +20,8 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "react-dev-utils": "^11.0.1"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
